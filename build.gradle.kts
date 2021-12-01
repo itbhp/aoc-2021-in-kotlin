@@ -1,31 +1,20 @@
 plugins {
-    kotlin("jvm") version "1.6.0"
-    idea
-}
-
-apply(plugin = "java")
-
-dependencies{
-    testImplementation("org.junit.jupiter:junit-jupiter-engine:5.8.2")
-    testImplementation("org.assertj:assertj-core:3.21.0")
+    id("org.jetbrains.kotlin.jvm") version "1.5.31"
 }
 
 repositories {
     mavenCentral()
 }
 
-tasks {
-    sourceSets {
-        main {
-            java.srcDirs("src")
-        }
-    }
+dependencies {
+    // Align versions of all Kotlin components
+    implementation(platform("org.jetbrains.kotlin:kotlin-bom"))
+    testImplementation("org.junit.jupiter:junit-jupiter-engine:5.8.1")
+    testImplementation("org.junit.jupiter:junit-jupiter-params:5.8.1")
+    testImplementation("org.assertj:assertj-core:3.21.0")
+    testImplementation("org.mockito:mockito-junit-jupiter:3.12.4")
+}
 
-    test {
-        useJUnitPlatform()
-    }
-
-    wrapper {
-        gradleVersion = "7.3"
-    }
+tasks.test {
+    useJUnitPlatform()
 }

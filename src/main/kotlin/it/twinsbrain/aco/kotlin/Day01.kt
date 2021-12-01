@@ -1,11 +1,8 @@
 package it.twinsbrain.aco.kotlin
 
 object Day01 {
-  fun part1(input: List<String>): Int {
-    return input.size
-  }
-
-  fun part2(input: List<String>): Int {
-    return input.size
+  // part1
+  fun howManySubsequentIncreases(input: List<Int>): Int {
+    return 0
   }
 }
