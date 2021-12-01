@@ -12,4 +12,18 @@ class Day01Test {
       howManySubsequentIncreases(listOf(1, 1, 1, 1))
     ).isEqualTo(0)
   }
+
+  @Test
+  internal fun oneIncrease() {
+    assertThat(
+      howManySubsequentIncreases(listOf(1, 1, 2, 2))
+    ).isEqualTo(1)
+  }
+
+  @Test
+  internal fun multipleIncreases() {
+    assertThat(
+      howManySubsequentIncreases(listOf(1, 1, 2, 3))
+    ).isEqualTo(2)
+  }
 }
