@@ -1,5 +1,7 @@
 package it.twinsbrain.aco.kotlin
 
+import it.twinsbrain.aco.kotlin.common.FileModule.readInput
+
 object Day01 {
   // part1
   fun howManySubsequentIncreases(input: List<Int>): Int {
@@ -9,4 +11,10 @@ object Day01 {
       prev < next
     }
   }
+}
+
+fun main() {
+  val day1Input = readInput("/inputs/day1.txt")
+    .map { it.toInt() }
+  println(Day01.howManySubsequentIncreases(day1Input))
 }
