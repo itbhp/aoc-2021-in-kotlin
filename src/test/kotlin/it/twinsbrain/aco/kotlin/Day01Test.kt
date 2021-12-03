@@ -9,7 +9,7 @@ import org.junit.jupiter.api.Test
 class Day01Test {
 
   @Nested
-  class Part1Test {
+  inner class Part1Test {
     @Test
     internal fun zeroIncreases() {
       assertThat(
@@ -33,7 +33,7 @@ class Day01Test {
   }
 
   @Nested
-  class Part2Test {
+  inner class Part2Test {
     @Test
     internal fun zeroIncreases() {
       assertThat(

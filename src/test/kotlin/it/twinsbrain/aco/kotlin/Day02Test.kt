@@ -11,7 +11,7 @@ import org.junit.jupiter.api.Test
 internal class Day02Test {
 
   @Nested
-  class Part1Test {
+  inner class Part1Test {
     @Test
     internal fun `on no commands`() {
       assertThat(move(emptyList())).isEqualTo(Submarine(0, 0))
@@ -55,7 +55,7 @@ internal class Day02Test {
   }
 
   @Nested
-  class Part2Test {
+  inner class Part2Test {
     @Test
     internal fun `on no commands`() {
       assertThat(moveWithAim(emptyList())).isEqualTo(AimedSubmarine(0, 0, 0))
