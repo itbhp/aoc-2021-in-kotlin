@@ -14,18 +14,18 @@ fun main() {
 
 object Day03 {
 
-  private data class BitCounters(val zeros: List<Int>, val ones: List<Int>) {
+  private data class BitCounters(val zerosCounter: List<Int>, val onesCounter: List<Int>) {
 
     fun updateWith(bits: String): BitCounters {
       return BitCounters(
-        zeros.updateCounters(bits) { bit -> bit == '0' },
-        ones.updateCounters(bits) { bit -> bit == '1' }
+        zerosCounter.updateCounters(bits) { bit -> bit == '0' },
+        onesCounter.updateCounters(bits) { bit -> bit == '1' }
       )
     }
 
-    fun gammaRate(): Int = rate(zeros, ones) { numberOfZeros, numberOfOnes -> numberOfZeros > numberOfOnes }
+    fun gammaRate(): Int = rate(zerosCounter, onesCounter) { numberOfZeros, numberOfOnes -> numberOfZeros > numberOfOnes }
 
-    fun epsilonRate(): Int = rate(zeros, ones) { numberOfZeros, numberOfOnes -> numberOfZeros < numberOfOnes }
+    fun epsilonRate(): Int = rate(zerosCounter, onesCounter) { numberOfZeros, numberOfOnes -> numberOfZeros < numberOfOnes }
 
     private fun rate(
       zeros: List<Int>,
