@@ -11,4 +11,16 @@ internal class Day02Test {
   internal fun `on no commands`() {
     assertThat(move(emptyList())).isEqualTo(Position(0,0))
   }
+
+  @Test
+  internal fun `move forward`() {
+    assertThat(
+      move(
+        listOf(
+          "forward 4",
+          "forward 2"
+        )
+      )
+    ).isEqualTo(Position(6,0))
+  }
 }
