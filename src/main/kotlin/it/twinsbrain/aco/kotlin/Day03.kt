@@ -1,7 +1,15 @@
 package it.twinsbrain.aco.kotlin
 
+import it.twinsbrain.aco.kotlin.common.FileModule
+
 typealias NumberOfZeros = Int
 typealias NumberOfOnes = Int
+
+fun main(){
+  val day3Input = FileModule.readInput("/inputs/day3.txt")
+  val rates = Day03.rates(day3Input)
+  println(rates.gammaRate.value * rates.epsilonRate.value)
+}
 
 object Day03 {
 
