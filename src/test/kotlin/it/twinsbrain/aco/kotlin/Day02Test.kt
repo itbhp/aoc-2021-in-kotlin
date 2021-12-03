@@ -23,4 +23,16 @@ internal class Day02Test {
       )
     ).isEqualTo(Position(6,0))
   }
+
+  @Test
+  internal fun `move down`() {
+    assertThat(
+      move(
+        listOf(
+          "down 4",
+          "down 2"
+        )
+      )
+    ).isEqualTo(Position(0,6))
+  }
 }
