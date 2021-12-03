@@ -6,7 +6,7 @@ import it.twinsbrain.aco.kotlin.common.FileModule
 typealias NumberOfZeros = Int
 typealias NumberOfOnes = Int
 
-fun main(){
+fun main() {
   val day3Input = FileModule.readInput("/inputs/day3.txt")
   val rates = Day03.rates(day3Input)
   println(rates.gammaRate.value * rates.epsilonRate.value)
@@ -14,7 +14,7 @@ fun main(){
 
 object Day03 {
 
-  private data class BitCounters(val zeros: MutableList<Int>, val ones: MutableList<Int>) {
+  private data class BitCounters(val zeros: List<Int>, val ones: List<Int>) {
 
     fun updateWith(bits: String): BitCounters {
       return BitCounters(
@@ -28,8 +28,8 @@ object Day03 {
     fun epsilonRate(): Int = rate(zeros, ones) { numberOfZeros, numberOfOnes -> numberOfZeros < numberOfOnes }
 
     private fun rate(
-      zeros: MutableList<Int>,
-      ones: MutableList<Int>,
+      zeros: List<Int>,
+      ones: List<Int>,
       predicate: (NumberOfZeros, NumberOfOnes) -> Boolean
     ) = if (ones.isEmpty()) {
       0
@@ -42,11 +42,10 @@ object Day03 {
       )
     }
 
-    private fun MutableList<Int>.updateCounters(bits: String, predicate: (Char) -> Boolean): MutableList<Int> {
+    private fun List<Int>.updateCounters(bits: String, predicate: (Char) -> Boolean): List<Int> {
       return bits.toList()
         .zip(this)
         .map { (bit, counter) -> if (predicate(bit)) counter + 1 else counter }
-        .toMutableList()
     }
 
     fun toRates(): Rates {
@@ -56,10 +55,10 @@ object Day03 {
     }
 
     companion object {
-      fun zero(numberOfBits: Int) = BitCounters(
-        MutableList(numberOfBits) { 0 },
-        MutableList(numberOfBits) { 0 }
-      )
+      fun zero(numberOfBits: Int): BitCounters {
+        val initialCounters = generateSequence { 0 }.take(numberOfBits).toList()
+        return BitCounters(initialCounters, initialCounters)
+      }
     }
   }
 
@@ -72,11 +71,12 @@ object Day03 {
     }.toRates()
   }
 
-  data class Rates(val gammaRate: GammaRate, val epsilonRate: EpsilonRate){
-    companion object{
+  data class Rates(val gammaRate: GammaRate, val epsilonRate: EpsilonRate) {
+    companion object {
       val zero = Rates(GammaRate(0), EpsilonRate(0))
     }
   }
+
   data class GammaRate(val value: Int)
   data class EpsilonRate(val value: Int)
 }
