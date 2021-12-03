@@ -3,12 +3,15 @@ package it.twinsbrain.aco.kotlin
 import it.twinsbrain.aco.kotlin.Day02.Command.Companion.moveWithAim
 import it.twinsbrain.aco.kotlin.Day02.Command.Companion.moveWithoutAim
 import it.twinsbrain.aco.kotlin.Day02.move
+import it.twinsbrain.aco.kotlin.Day02.moveWithAim
 import it.twinsbrain.aco.kotlin.common.FileModule
 
 fun main() {
   val day2Input = FileModule.readInput("/inputs/day2.txt")
-  val finalPosition = move(day2Input)
-  println(finalPosition.x * finalPosition.y)
+  val part1Result = move(day2Input)
+  val part2Result = moveWithAim(day2Input)
+  println(part1Result.x * part1Result.y)
+  println(part2Result.x * part2Result.y)
 }
 
 object Day02 {
