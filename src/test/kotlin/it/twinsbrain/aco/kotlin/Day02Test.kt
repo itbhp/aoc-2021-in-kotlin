@@ -1,6 +1,7 @@
 package it.twinsbrain.aco.kotlin
 
-import it.twinsbrain.aco.kotlin.Day02.Position
+import it.twinsbrain.aco.kotlin.Day02.AimedSubmarine
+import it.twinsbrain.aco.kotlin.Day02.Submarine
 import it.twinsbrain.aco.kotlin.Day02.move
 import it.twinsbrain.aco.kotlin.Day02.moveWithAim
 import org.assertj.core.api.Assertions.assertThat
@@ -13,7 +14,7 @@ internal class Day02Test {
   class Part1Test {
     @Test
     internal fun `on no commands`() {
-      assertThat(move(emptyList())).isEqualTo(Position(0, 0))
+      assertThat(move(emptyList())).isEqualTo(Submarine(0, 0))
     }
 
     @Test
@@ -25,7 +26,7 @@ internal class Day02Test {
             "forward 2"
           )
         )
-      ).isEqualTo(Position(6, 0))
+      ).isEqualTo(Submarine(6, 0))
     }
 
     @Test
@@ -37,7 +38,7 @@ internal class Day02Test {
             "down 2"
           )
         )
-      ).isEqualTo(Position(0, 6))
+      ).isEqualTo(Submarine(0, 6))
     }
 
     @Test
@@ -49,7 +50,7 @@ internal class Day02Test {
             "up 2"
           )
         )
-      ).isEqualTo(Position(0, 2))
+      ).isEqualTo(Submarine(0, 2))
     }
   }
 
@@ -57,7 +58,7 @@ internal class Day02Test {
   class Part2Test {
     @Test
     internal fun `on no commands`() {
-      assertThat(moveWithAim(emptyList())).isEqualTo(Position(0, 0, 0))
+      assertThat(moveWithAim(emptyList())).isEqualTo(AimedSubmarine(0, 0, 0))
     }
 
     @Test
@@ -69,7 +70,7 @@ internal class Day02Test {
             "down 2"
           )
         )
-      ).isEqualTo(Position(0, 0, 6))
+      ).isEqualTo(AimedSubmarine(0, 0, 6))
     }
 
     @Test
@@ -81,7 +82,7 @@ internal class Day02Test {
             "up 2"
           )
         )
-      ).isEqualTo(Position(0, 0, 2))
+      ).isEqualTo(AimedSubmarine(0, 0, 2))
     }
 
     @Test
@@ -94,7 +95,7 @@ internal class Day02Test {
             "forward 3"
           )
         )
-      ).isEqualTo(Position(7, 6, 2))
+      ).isEqualTo(AimedSubmarine(7, 6, 2))
     }
   }
 }

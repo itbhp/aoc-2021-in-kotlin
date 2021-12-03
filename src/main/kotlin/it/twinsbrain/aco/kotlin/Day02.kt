@@ -15,22 +15,25 @@ fun main() {
 }
 
 object Day02 {
-  data class Position(val x: Int, val y: Int, val aim: Int = 0) {
-    fun moveForward(units: Int): Position = this.copy(x = this.x + units)
-    fun moveDown(units: Int): Position = this.copy(y = this.y + units)
-    fun moveUp(units: Int): Position = this.copy(y = this.y - units)
-    fun moveForwardWithAim(units: Int): Position = this.copy(x = this.x + units, y = this.y + this.aim * units)
-    fun moveDownWithAim(units: Int): Position = this.copy(aim = this.aim + units)
-    fun moveUpWithAim(units: Int): Position = this.copy(aim = this.aim - units)
+  data class Submarine(val x: Int, val y: Int) {
+    fun moveForward(units: Int): Submarine = this.copy(x = this.x + units)
+    fun moveDown(units: Int): Submarine = this.copy(y = this.y + units)
+    fun moveUp(units: Int): Submarine = this.copy(y = this.y - units)
   }
 
-  fun move(input: List<String>): Position =
-    input.map(::toCommand)
-      .fold(Position(0, 0)) { position, command -> command moveWithoutAim position }
+  data class AimedSubmarine(val x: Int, val y: Int, val aim: Int) {
+    fun moveForward(units: Int): AimedSubmarine = this.copy(x = this.x + units, y = this.y + this.aim * units)
+    fun moveDown(units: Int): AimedSubmarine = this.copy(aim = this.aim + units)
+    fun moveUp(units: Int): AimedSubmarine = this.copy(aim = this.aim - units)
+  }
 
-  fun moveWithAim(input: List<String>): Position =
+  fun move(input: List<String>): Submarine =
     input.map(::toCommand)
-      .fold(Position(0, 0, 0)) { position, command -> command moveWithAim position }
+      .fold(Submarine(0, 0)) { position, command -> command moveWithoutAim position }
+
+  fun moveWithAim(input: List<String>): AimedSubmarine =
+    input.map(::toCommand)
+      .fold(AimedSubmarine(0, 0, 0)) { position, command -> command moveWithAim position }
 
   private fun toCommand(input: String): Command {
     val (commandName, unit) = input.split(" ")
@@ -45,16 +48,16 @@ object Day02 {
 
   private sealed class Command {
     companion object {
-      infix fun Command.moveWithoutAim(previousPosition: Position): Position = when (this) {
-        is Forward -> previousPosition.moveForward(this.units)
-        is Down -> previousPosition.moveDown(this.units)
-        is Up -> previousPosition.moveUp(this.units)
+      infix fun Command.moveWithoutAim(submarine: Submarine): Submarine = when (this) {
+        is Forward -> submarine.moveForward(this.units)
+        is Down -> submarine.moveDown(this.units)
+        is Up -> submarine.moveUp(this.units)
       }
 
-      infix fun Command.moveWithAim(previousPosition: Position): Position = when (this) {
-        is Forward -> previousPosition.moveForwardWithAim(this.units)
-        is Down -> previousPosition.moveDownWithAim(this.units)
-        is Up -> previousPosition.moveUpWithAim(this.units)
+      infix fun Command.moveWithAim(submarine: AimedSubmarine): AimedSubmarine = when (this) {
+        is Forward -> submarine.moveForward(this.units)
+        is Down -> submarine.moveDown(this.units)
+        is Up -> submarine.moveUp(this.units)
       }
     }
   }
