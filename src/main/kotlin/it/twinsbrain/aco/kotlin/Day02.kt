@@ -1,5 +1,14 @@
 package it.twinsbrain.aco.kotlin
 
+import it.twinsbrain.aco.kotlin.Day02.move
+import it.twinsbrain.aco.kotlin.common.FileModule
+
+fun main() {
+  val day2Input = FileModule.readInput("/inputs/day2.txt")
+  val finalPosition = move(day2Input)
+  println(finalPosition.x * finalPosition.y)
+}
+
 object Day02 {
   data class Position(val x: Int, val y: Int) {
     fun moveForward(units: Int): Position = this.copy(x = this.x + units)
