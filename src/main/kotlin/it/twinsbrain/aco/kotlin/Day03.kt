@@ -1,5 +1,6 @@
 package it.twinsbrain.aco.kotlin
 
+import it.twinsbrain.aco.kotlin.Day03.Rates.Companion.zero
 import it.twinsbrain.aco.kotlin.common.FileModule
 
 typealias NumberOfZeros = Int
@@ -14,6 +15,13 @@ fun main(){
 object Day03 {
 
   private data class BitCounters(val zeros: MutableList<Int>, val ones: MutableList<Int>) {
+
+    fun updateWith(bits: String): BitCounters {
+      return BitCounters(
+        zeros.updateCounters(bits) { bit -> bit == '0' },
+        ones.updateCounters(bits) { bit -> bit == '1' }
+      )
+    }
 
     fun gammaRate(): Int = rate(zeros, ones) { numberOfZeros, numberOfOnes -> numberOfZeros > numberOfOnes }
 
@@ -34,28 +42,11 @@ object Day03 {
       )
     }
 
-    fun updateWith(bits: String): BitCounters {
-      initializeCounters(bits.length)
-      return BitCounters(
-        zeros.updateCounters(bits) { bit -> bit == '0' },
-        ones.updateCounters(bits) { bit -> bit == '1' }
-      )
-    }
-
     private fun MutableList<Int>.updateCounters(bits: String, predicate: (Char) -> Boolean): MutableList<Int> {
       return bits.toList()
         .zip(this)
         .map { (bit, counter) -> if (predicate(bit)) counter + 1 else counter }
         .toMutableList()
-    }
-
-    private fun initializeCounters(size: Int) {
-      if (zeros.isEmpty()) {
-        repeat(size) { zeros.add(0) }
-      }
-      if (ones.isEmpty()) {
-        repeat(size) { ones.add(0) }
-      }
     }
 
     fun toRates(): Rates {
@@ -65,18 +56,27 @@ object Day03 {
     }
 
     companion object {
-      val zero = BitCounters(mutableListOf(), mutableListOf())
+      fun zero(numberOfBits: Int) = BitCounters(
+        MutableList(numberOfBits) { 0 },
+        MutableList(numberOfBits) { 0 }
+      )
     }
   }
 
   fun rates(list: List<String>): Rates {
-    val bitCounters = list.fold(BitCounters.zero) { counters, bits ->
-      counters.updateWith(bits)
+    if (list.isEmpty()) {
+      return zero
     }
-    return bitCounters.toRates()
+    return list.fold(BitCounters.zero(list[0].length)) { counters, bits ->
+      counters.updateWith(bits)
+    }.toRates()
   }
 
-  data class Rates(val gammaRate: GammaRate, val epsilonRate: EpsilonRate)
+  data class Rates(val gammaRate: GammaRate, val epsilonRate: EpsilonRate){
+    companion object{
+      val zero = Rates(GammaRate(0), EpsilonRate(0))
+    }
+  }
   data class GammaRate(val value: Int)
   data class EpsilonRate(val value: Int)
 }
