@@ -1,5 +1,6 @@
 package it.twinsbrain.aco.kotlin
 
+import it.twinsbrain.aco.kotlin.Day02.Command.Companion.firstAttemptToMove
 import it.twinsbrain.aco.kotlin.Day02.move
 import it.twinsbrain.aco.kotlin.common.FileModule
 
@@ -18,7 +19,7 @@ object Day02 {
 
   fun move(input: List<String>): Position {
     return input.map(::toCommand)
-      .fold(Position(0, 0)) { position, command -> command.executeFrom(position) }
+      .fold(Position(0, 0)) { position, command -> command.firstAttemptToMove(position) }
   }
 
   private fun toCommand(input: String): Command {
@@ -33,14 +34,18 @@ object Day02 {
   }
 
   private sealed class Command {
-    fun executeFrom(previousPosition: Position): Position = when (this) {
-      is Forward -> previousPosition.moveForward(this.units)
-      is Down -> previousPosition.moveDown(this.units)
-      is Up -> previousPosition.moveUp(this.units)
+    companion object {
+      fun Command.firstAttemptToMove(previousPosition: Position): Position = when (this) {
+        is Forward -> previousPosition.moveForward(this.units)
+        is Down -> previousPosition.moveDown(this.units)
+        is Up -> previousPosition.moveUp(this.units)
+      }
     }
   }
 
   private data class Forward(val units: Int) : Command()
   private data class Down(val units: Int) : Command()
   private data class Up(val units: Int) : Command()
+
+
 }
