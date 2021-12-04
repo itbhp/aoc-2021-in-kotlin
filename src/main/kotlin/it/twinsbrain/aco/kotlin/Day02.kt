@@ -29,11 +29,11 @@ object Day02 {
 
   fun move(input: List<String>): Submarine =
     input.map(::toCommand)
-      .fold(Submarine(0, 0)) { position, command -> command moveWithoutAim position }
+      .fold(Submarine(0, 0)) { submarine, command -> command moveWithoutAim submarine }
 
   fun moveWithAim(input: List<String>): AimedSubmarine =
     input.map(::toCommand)
-      .fold(AimedSubmarine(0, 0, 0)) { position, command -> command moveWithAim position }
+      .fold(AimedSubmarine(0, 0, 0)) { submarine, command -> command moveWithAim submarine }
 
   private fun toCommand(input: String): Command {
     val (commandName, unit) = input.split(" ")
