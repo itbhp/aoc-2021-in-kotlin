@@ -1,26 +1,54 @@
 package it.twinsbrain.aco.kotlin
 
 import it.twinsbrain.aco.kotlin.Day03.Rates.Companion.zero
-import it.twinsbrain.aco.kotlin.common.FileModule
+import it.twinsbrain.aco.kotlin.Day03.rates
+import it.twinsbrain.aco.kotlin.common.FileModule.readInput
 
 typealias NumberOfZeros = Int
 typealias NumberOfOnes = Int
 
 fun main() {
-  val day3Input = FileModule.readInput("/inputs/day3.txt")
-  val rates = Day03.rates(day3Input)
+  val day3Input = readInput("/inputs/day3.txt")
+  val rates = rates(day3Input)
   println(rates.gammaRate.value * rates.epsilonRate.value)
 }
 
 object Day03 {
 
+  fun rates(list: List<String>): Rates {
+    return list.takeIf { list.isNotEmpty() }
+      ?.let { bitsList->
+        val numberOfBits = bitsList[0].length
+        val initialCounters = BitCounters.zero(numberOfBits)
+        return bitsList.fold(initialCounters) { counters, bits ->
+          counters.updateWith(bits)
+        }.toRates()
+      }
+      ?: zero
+  }
+
+  data class Rates(val gammaRate: GammaRate, val epsilonRate: EpsilonRate) {
+    companion object {
+      val zero = Rates(GammaRate(0), EpsilonRate(0))
+    }
+  }
+
+  data class GammaRate(val value: Int)
+  data class EpsilonRate(val value: Int)
+
   private data class BitCounters(val zerosCounter: List<Int>, val onesCounter: List<Int>) {
 
     fun updateWith(bits: String): BitCounters {
       return BitCounters(
-        zerosCounter.updateCounters(bits) { bit -> bit == '0' },
-        onesCounter.updateCounters(bits) { bit -> bit == '1' }
+        zerosCounter.updateCountersWith(bits) { bit -> bit == '0' },
+        onesCounter.updateCountersWith(bits) { bit -> bit == '1' }
       )
+    }
+
+    private fun List<Int>.updateCountersWith(bits: String, predicate: (Char) -> Boolean): List<Int> {
+      return bits.toList()
+        .zip(this)
+        .map { (bit, counter) -> if (predicate(bit)) counter + 1 else counter }
     }
 
     fun gammaRate(): Int = rate(zerosCounter, onesCounter) { numberOfZeros, numberOfOnes -> numberOfZeros > numberOfOnes }
@@ -42,12 +70,6 @@ object Day03 {
       )
     }
 
-    private fun List<Int>.updateCounters(bits: String, predicate: (Char) -> Boolean): List<Int> {
-      return bits.toList()
-        .zip(this)
-        .map { (bit, counter) -> if (predicate(bit)) counter + 1 else counter }
-    }
-
     fun toRates(): Rates {
       val gammaRate = gammaRate()
       val epsilonRate = epsilonRate()
@@ -61,22 +83,4 @@ object Day03 {
       }
     }
   }
-
-  fun rates(list: List<String>): Rates {
-    if (list.isEmpty()) {
-      return zero
-    }
-    return list.fold(BitCounters.zero(list[0].length)) { counters, bits ->
-      counters.updateWith(bits)
-    }.toRates()
-  }
-
-  data class Rates(val gammaRate: GammaRate, val epsilonRate: EpsilonRate) {
-    companion object {
-      val zero = Rates(GammaRate(0), EpsilonRate(0))
-    }
-  }
-
-  data class GammaRate(val value: Int)
-  data class EpsilonRate(val value: Int)
 }
