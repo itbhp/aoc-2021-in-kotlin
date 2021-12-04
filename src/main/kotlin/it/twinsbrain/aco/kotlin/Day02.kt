@@ -4,10 +4,10 @@ import it.twinsbrain.aco.kotlin.Day02.Command.Companion.moveWithAim
 import it.twinsbrain.aco.kotlin.Day02.Command.Companion.moveWithoutAim
 import it.twinsbrain.aco.kotlin.Day02.move
 import it.twinsbrain.aco.kotlin.Day02.moveWithAim
-import it.twinsbrain.aco.kotlin.common.FileModule
+import it.twinsbrain.aco.kotlin.common.FileModule.readInput
 
 fun main() {
-  val day2Input = FileModule.readInput("/inputs/day2.txt")
+  val day2Input = readInput("/inputs/day2.txt")
   val part1Result = move(day2Input)
   val part2Result = moveWithAim(day2Input)
   println(part1Result.x * part1Result.y)
