@@ -36,12 +36,12 @@ object Day03 {
   data class GammaRate(val value: Int)
   data class EpsilonRate(val value: Int)
 
-  private data class BitCounters(val zerosCounter: List<Int>, val onesCounter: List<Int>) {
+  private data class BitCounters(val zerosCounters: List<Int>, val onesCounters: List<Int>) {
 
     fun updateWith(bits: String): BitCounters {
       return BitCounters(
-        zerosCounter.updateCountersWith(bits) { bit -> bit == '0' },
-        onesCounter.updateCountersWith(bits) { bit -> bit == '1' }
+        zerosCounters.updateCountersWith(bits) { bit -> bit == '0' },
+        onesCounters.updateCountersWith(bits) { bit -> bit == '1' }
       )
     }
 
@@ -52,10 +52,10 @@ object Day03 {
     }
 
     fun gammaRate(): Int =
-      rate(zerosCounter, onesCounter) { numberOfZeros, numberOfOnes -> numberOfZeros > numberOfOnes }
+      rate(zerosCounters, onesCounters) { numberOfZeros, numberOfOnes -> numberOfZeros > numberOfOnes }
 
     fun epsilonRate(): Int =
-      rate(zerosCounter, onesCounter) { numberOfZeros, numberOfOnes -> numberOfZeros < numberOfOnes }
+      rate(zerosCounters, onesCounters) { numberOfZeros, numberOfOnes -> numberOfZeros < numberOfOnes }
 
     private fun rate(
       zeros: List<Int>,
