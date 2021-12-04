@@ -51,9 +51,11 @@ object Day03 {
         .map { (bit, counter) -> if (predicate(bit)) counter + 1 else counter }
     }
 
-    fun gammaRate(): Int = rate(zerosCounter, onesCounter) { numberOfZeros, numberOfOnes -> numberOfZeros > numberOfOnes }
+    fun gammaRate(): Int =
+      rate(zerosCounter, onesCounter) { numberOfZeros, numberOfOnes -> numberOfZeros > numberOfOnes }
 
-    fun epsilonRate(): Int = rate(zerosCounter, onesCounter) { numberOfZeros, numberOfOnes -> numberOfZeros < numberOfOnes }
+    fun epsilonRate(): Int =
+      rate(zerosCounter, onesCounter) { numberOfZeros, numberOfOnes -> numberOfZeros < numberOfOnes }
 
     private fun rate(
       zeros: List<Int>,
