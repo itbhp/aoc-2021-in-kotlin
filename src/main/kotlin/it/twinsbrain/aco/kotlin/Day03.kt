@@ -37,17 +37,17 @@ object Day03 {
 
     private tailrec fun computeRating(
       list: List<String>,
-      comparator: (NumberOfZeros, NumberOfOnes) -> Boolean,
+      shouldFilterOnes: (NumberOfZeros, NumberOfOnes) -> Boolean,
       index: Int = 0
     ): Int {
       val onesCount = list.count { bits -> bits[index] == '1' }
       val zerosCount = list.size - onesCount
-      val value = if (comparator(zerosCount, onesCount)) '1' else '0'
+      val value = if (shouldFilterOnes(zerosCount, onesCount)) '1' else '0'
       val filtered = filterBy(list, index, value)
       return if (filtered.size == 1) {
         filtered.first().toInt(2)
       } else {
-        computeRating(filtered, comparator, index + 1)
+        computeRating(filtered, shouldFilterOnes, index + 1)
       }
     }
 
