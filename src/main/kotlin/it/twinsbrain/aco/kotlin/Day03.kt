@@ -2,22 +2,77 @@ package it.twinsbrain.aco.kotlin
 
 import it.twinsbrain.aco.kotlin.Day03.Rates.Companion.zero
 import it.twinsbrain.aco.kotlin.Day03.rates
+import it.twinsbrain.aco.kotlin.Day03.ratings
 import it.twinsbrain.aco.kotlin.common.FileModule.readInput
 
 typealias NumberOfZeros = Int
 typealias NumberOfOnes = Int
 
+typealias Bit = Char
+
 fun main() {
   val day3Input = readInput("/inputs/day3.txt")
   val rates = rates(day3Input)
-  println(rates.gammaRate.value * rates.epsilonRate.value)
+  val rating2 = ratings(day3Input)
+  println("Part1: " + rates.gammaRate.value * rates.epsilonRate.value)
+  println("Part2: " + rating2.oxygen.value * rating2.co2.value)
 }
 
 object Day03 {
 
+  data class Rating(val oxygen: OxygenGeneratorRating, val co2: CO2ScrubberRating) {
+    companion object {
+      val zero = Rating(OxygenGeneratorRating(0), CO2ScrubberRating(0))
+    }
+  }
+
+  data class OxygenGeneratorRating(val value: Int)
+  data class CO2ScrubberRating(val value: Int)
+
+  private object RatingModule {
+
+    fun co2(list: List<String>, index: Int = 0): Int {
+      val onesCount = list.count { bits -> bits[index] == '1' }
+      val zerosCount = list.size - onesCount
+      val value = if (onesCount < zerosCount) '1' else '0'
+      val filtered = filterBy(list, index, value)
+      return if (filtered.size == 1) {
+        filtered.first().toInt(2)
+      } else {
+        co2(filtered, index + 1)
+      }
+    }
+
+    fun oxygenRating(list: List<String>, index: Int = 0): Int {
+      val onesCount = list.count { bits -> bits[index] == '1' }
+      val zerosCount = list.size - onesCount
+      val value = if (onesCount >= zerosCount) '1' else '0'
+      val filtered = filterBy(list, index, value)
+      return if (filtered.size == 1) {
+        val first: String = filtered.first()
+        first.toInt(2)
+      } else {
+        oxygenRating(filtered, index + 1)
+      }
+    }
+
+    private fun filterBy(list: List<String>, index: Int, value: Bit): List<String> =
+      list.filter { bits -> bits[index] == value }
+
+  }
+
+  fun ratings(list: List<String>): Rating {
+    if (list.isEmpty()) {
+      return Rating.zero
+    }
+    val oxygen = OxygenGeneratorRating(RatingModule.oxygenRating(list))
+    val co2 = CO2ScrubberRating(RatingModule.co2(list))
+    return Rating(oxygen, co2)
+  }
+
   fun rates(list: List<String>): Rates {
     return list.takeIf { list.isNotEmpty() }
-      ?.let { bitsList->
+      ?.let { bitsList ->
         val numberOfBits = bitsList[0].length
         val initialCounters = BitCounters.zero(numberOfBits)
         return bitsList.fold(initialCounters) { counters, bits ->

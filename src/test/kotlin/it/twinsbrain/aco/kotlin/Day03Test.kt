@@ -1,6 +1,7 @@
 package it.twinsbrain.aco.kotlin
 
 import it.twinsbrain.aco.kotlin.Day03.rates
+import it.twinsbrain.aco.kotlin.Day03.ratings
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Nested
 import org.junit.jupiter.api.Test
@@ -65,6 +66,50 @@ internal class Day03Test {
           )
         ).epsilonRate.value
       ).isEqualTo(1501)
+    }
+  }
+
+  @Nested
+  inner class OxygenRateTest {
+    @Test
+    internal fun emptyData() {
+      assertThat(ratings(emptyList()).oxygen.value).isEqualTo(0)
+    }
+
+    @Test
+    internal fun moreValues() {
+      assertThat(
+        ratings(
+          listOf(
+            "000",
+            "111",
+            "101",
+            // 111
+          )
+        ).oxygen.value
+      ).isEqualTo(7)
+    }
+  }
+
+  @Nested
+  inner class Co2ScrubberRateTest {
+    @Test
+    internal fun emptyData() {
+      assertThat(ratings(emptyList()).co2.value).isEqualTo(0)
+    }
+
+    @Test
+    internal fun moreValues() {
+      assertThat(
+        ratings(
+          listOf(
+            "000",
+            "011",
+            "101",
+            //011
+          )
+        ).co2.value
+      ).isEqualTo(3)
     }
   }
 }
