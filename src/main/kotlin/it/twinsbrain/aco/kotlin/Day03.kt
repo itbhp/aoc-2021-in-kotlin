@@ -31,28 +31,23 @@ object Day03 {
 
   private object RatingModule {
 
-    fun co2(list: List<String>, index: Int = 0): Int {
+    fun co2(list: List<String>): Int = computeRating(list, { zeros, ones -> ones < zeros })
+
+    fun oxygenRating(list: List<String>): Int = computeRating(list, { zeros, ones -> ones >= zeros })
+
+    private tailrec fun computeRating(
+      list: List<String>,
+      comparator: (NumberOfZeros, NumberOfOnes) -> Boolean,
+      index: Int = 0
+    ): Int {
       val onesCount = list.count { bits -> bits[index] == '1' }
       val zerosCount = list.size - onesCount
-      val value = if (onesCount < zerosCount) '1' else '0'
+      val value = if (comparator(zerosCount, onesCount)) '1' else '0'
       val filtered = filterBy(list, index, value)
       return if (filtered.size == 1) {
         filtered.first().toInt(2)
       } else {
-        co2(filtered, index + 1)
-      }
-    }
-
-    fun oxygenRating(list: List<String>, index: Int = 0): Int {
-      val onesCount = list.count { bits -> bits[index] == '1' }
-      val zerosCount = list.size - onesCount
-      val value = if (onesCount >= zerosCount) '1' else '0'
-      val filtered = filterBy(list, index, value)
-      return if (filtered.size == 1) {
-        val first: String = filtered.first()
-        first.toInt(2)
-      } else {
-        oxygenRating(filtered, index + 1)
+        computeRating(filtered, comparator, index + 1)
       }
     }
 
