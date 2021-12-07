@@ -7,7 +7,7 @@ import it.twinsbrain.aoc.kotlin.Day02.moveWithAim
 import it.twinsbrain.aoc.kotlin.common.FileModule.readInput
 
 fun main() {
-  val day2Input = readInput("/inputs/day2.txt")
+  val day2Input = readInput("/inputs/day02.txt")
   val part1Result = move(day2Input)
   val part2Result = moveWithAim(day2Input)
   println(part1Result.x * part1Result.y)

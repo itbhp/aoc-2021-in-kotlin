@@ -12,7 +12,7 @@ typealias Bit = Char
 typealias Bits = String
 
 fun main() {
-  val day3Input = readInput("/inputs/day3.txt")
+  val day3Input = readInput("/inputs/day03.txt")
   val rates = rates(day3Input)
   val rating2 = ratings(day3Input)
   println("Part1: " + rates.gammaRate.value * rates.epsilonRate.value)

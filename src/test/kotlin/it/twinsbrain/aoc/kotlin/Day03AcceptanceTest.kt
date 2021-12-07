@@ -8,7 +8,7 @@ class Day03AcceptanceTest {
 
   @Test
   internal fun acceptanceTest() {
-    val day3Input = readInput("/inputs/day3.txt")
+    val day3Input = readInput("/inputs/day03.txt")
     val rates = Day03.rates(day3Input)
     val rating2 = Day03.ratings(day3Input)
     val expectedPart1 = 741950

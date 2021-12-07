@@ -27,7 +27,7 @@ object Day01 {
 }
 
 fun main() {
-  val day1Input = readInput("/inputs/day1.txt")
+  val day1Input = readInput("/inputs/day01.txt")
     .map { it.toInt() }
   println(howManySubsequentIncreases(day1Input))
   println(howManyIncreases(day1Input))
