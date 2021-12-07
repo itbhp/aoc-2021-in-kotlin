@@ -1,21 +1,25 @@
 package it.twinsbrain.aoc.kotlin
 
 import it.twinsbrain.aoc.kotlin.Day05.Segment.Companion.segment
+import it.twinsbrain.aoc.kotlin.Day05.howManyIntersections
 import it.twinsbrain.aoc.kotlin.common.FileModule
+import it.twinsbrain.aoc.kotlin.common.FileModule.readInput
 import it.twinsbrain.aoc.kotlin.common.MathModule.Fraction
 import java.lang.Integer.min
 import kotlin.math.max
 
 fun main() {
-  val day5Input = FileModule.readInput("/inputs/day05.txt")
-  val intersections = Day05.howManyIntersections(day5Input)
-  println(intersections)
+  val day5Input = readInput("/inputs/day05.txt")
+  println("Part1: ${howManyIntersections(day5Input)}")
+  println("Part2: ${howManyIntersections(day5Input, true)}")
 }
 
 object Day05 {
 
-  fun howManyIntersections(input: List<String>): Int {
-    val segments = segments(input).filter { it.isHorizontal() || it.isVertical()}
+  fun howManyIntersections(input: List<String>, shouldConsiderDiagonal: Boolean = false): Int {
+    val segments =
+      if (shouldConsiderDiagonal) segments(input)
+      else segments(input).filter { it.isHorizontal() || it.isVertical() }
     val points: List<Point> = segments.flatMap { it.points() }
     return points
       .groupBy { it }

@@ -7,8 +7,14 @@ import org.junit.jupiter.api.Test
 
 class Day05AcceptanceTest {
   @Test
-  internal fun acceptanceTest() {
+  internal fun acceptancePart1Test() {
     val day5Input = readInput("/inputs/day05_sample.txt")
     assertThat(howManyIntersections(day5Input)).isEqualTo(5)
+  }
+
+  @Test
+  internal fun acceptancePart2Test() {
+    val day5Input = readInput("/inputs/day05_sample.txt")
+    assertThat(howManyIntersections(day5Input, true)).isEqualTo(12)
   }
 }
