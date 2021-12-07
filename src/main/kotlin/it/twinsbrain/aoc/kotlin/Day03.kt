@@ -102,25 +102,20 @@ object Day03 {
     }
 
     fun gammaRate(): Int =
-      rate(zerosCounters, onesCounters) { numberOfZeros, numberOfOnes -> numberOfZeros > numberOfOnes }
+      rate { numberOfZeros, numberOfOnes -> numberOfZeros > numberOfOnes }
 
     fun epsilonRate(): Int =
-      rate(zerosCounters, onesCounters) { numberOfZeros, numberOfOnes -> numberOfZeros < numberOfOnes }
+      rate { numberOfZeros, numberOfOnes -> numberOfZeros < numberOfOnes }
 
     private fun rate(
-      zeros: List<Int>,
-      ones: List<Int>,
       predicate: (NumberOfZeros, NumberOfOnes) -> Boolean
-    ) = if (ones.isEmpty()) {
-      0
-    } else {
-      Integer.parseInt(
-        zeros.zip(ones)
-          .map { (numberOfZeros, numberOfOnes) -> if (predicate(numberOfZeros, numberOfOnes)) '0' else '1' }
-          .joinToString(""),
-        2
-      )
-    }
+    ) = onesCounters.takeIf { it.isNotEmpty() }
+      ?.let { ones ->
+        zerosCounters.zip(ones)
+          .map { (numberOfZeros, numberOfOnes) ->
+            if (predicate(numberOfZeros, numberOfOnes)) '0' else '1'
+          }.joinToString("").toInt(2)
+      } ?: 0
 
     fun toRates(): Rates {
       val gammaRate = gammaRate()
