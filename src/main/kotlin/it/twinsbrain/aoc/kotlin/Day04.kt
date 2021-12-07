@@ -72,14 +72,19 @@ object Day04 {
       val flatten: List<Cell> = cells.flatten()
       flatten.groupBy { it.y }.values
     }
+    private var alreadyWon = false
 
     fun check(number: Int): CheckResult {
+      if (alreadyWon) {
+        return NothingRelevant
+      }
       cells.forEach { row ->
         row.forEach { cell ->
           cell.check(number)
         }
       }
       return if (gotBingo()) {
+        alreadyWon = true
         Won(score())
       } else {
         NothingRelevant
