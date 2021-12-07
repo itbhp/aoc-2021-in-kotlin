@@ -7,13 +7,13 @@ typealias Row = List<Cell>
 
 fun main() {
   val day4Input = FileModule.readInput("/inputs/day04.txt")
-  val checkedBoard = Day04.winner(day4Input)
+  val checkedBoard = Day04.winners(day4Input)
   println("First: ${checkedBoard.firstWinner}")
   println("Last: ${checkedBoard.lastWinner}")
 }
 
 object Day04 {
-  fun winner(input: List<String>): BingoGame {
+  fun winners(input: List<String>): BingoGame {
     val numbers = drawnNumbers(input)
     val game = from(input.drop(1))
     numbers.forEach { number ->
