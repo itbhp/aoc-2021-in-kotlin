@@ -5,7 +5,8 @@ import it.twinsbrain.aoc.kotlin.common.FileModule
 
 fun main() {
   val day6Input = FileModule.readInput("/inputs/day06.txt")
-  println(countFish(day6Input, 80))
+  println("Part1: ${countFish(day6Input, 80)}")
+//  println("Part2: ${countFish(day6Input, 256)}")
 }
 
 object Day06 {
@@ -41,7 +42,13 @@ object Day06 {
 
     private fun union(other: World): World = World(this.fishes + other.fishes)
 
-    private fun moveForward(): World = World(this.fishes.map { Fish(it.daysUntilReset - 1) })
+    private fun moveForward(): World {
+      val newFishes: List<Fish> = this.fishes
+        .groupBy { it }
+        .map { it.key to it.value.size }
+        .flatMap { (f, count) -> (1..count).map { Fish(f.daysUntilReset - 1) } }
+      return World(newFishes)
+    }
   }
 
   data class Fish(var daysUntilReset: Int)
