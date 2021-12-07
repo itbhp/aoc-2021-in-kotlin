@@ -1,10 +1,10 @@
 package it.twinsbrain.aoc.kotlin
 
 import it.twinsbrain.aoc.kotlin.Day04.BingoChart
-import it.twinsbrain.aoc.kotlin.Day04.Board
+import it.twinsbrain.aoc.kotlin.Day04.BingoGame
 import it.twinsbrain.aoc.kotlin.Day04.Cell
-import it.twinsbrain.aoc.kotlin.Day04.boardFrom
-import it.twinsbrain.aoc.kotlin.Day04.lotteryNumbers
+import it.twinsbrain.aoc.kotlin.Day04.from
+import it.twinsbrain.aoc.kotlin.Day04.drawnNumbers
 import it.twinsbrain.aoc.kotlin.Day04.winner
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
@@ -12,14 +12,14 @@ import org.junit.jupiter.api.Test
 internal class Day04Test {
   @Test
   internal fun `should read lottery numbers`() {
-    assertThat(lotteryNumbers(listOf("17,58,52,49,72,33")))
+    assertThat(drawnNumbers(listOf("17,58,52,49,72,33")))
       .isEqualTo(listOf(17, 58, 52, 49, 72, 33))
   }
 
   @Test
   internal fun `should read the bing charts`() {
     assertThat(
-      boardFrom(
+      from(
         listOf(
           "",
           "59 98 84 27 56",
@@ -36,7 +36,7 @@ internal class Day04Test {
         )
       )
     ).isEqualTo(
-      Board(
+      BingoGame(
         listOf(
           BingoChart(
             listOf(

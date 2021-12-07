@@ -13,18 +13,18 @@ fun main() {
 }
 
 object Day04 {
-  fun winner(input: List<String>): Board {
-    val lotteryNumbers = lotteryNumbers(input)
-    val board = boardFrom(input.drop(1))
-    lotteryNumbers.forEach { number ->
-      board.draw(number)
+  fun winner(input: List<String>): BingoGame {
+    val numbers = drawnNumbers(input)
+    val game = from(input.drop(1))
+    numbers.forEach { number ->
+      game.draw(number)
     }
-    return board
+    return game
   }
 
-  fun lotteryNumbers(input: List<String>) = input[0].split(",").map { it.toInt() }
+  fun drawnNumbers(input: List<String>) = input[0].split(",").map { it.toInt() }
 
-  fun boardFrom(input: List<String>): Board {
+  fun from(input: List<String>): BingoGame {
     val list: List<BingoChart> = input
       .chunked(6)
       .map { bingoChartInput ->
@@ -37,10 +37,10 @@ object Day04 {
           }
         BingoChart(rows)
       }
-    return Board(list)
+    return BingoGame(list)
   }
 
-  data class Board(val charts: List<BingoChart>) {
+  data class BingoGame(val charts: List<BingoChart>) {
     private val winnersScore = mutableListOf<Int>()
     fun draw(number: Int) {
       charts.forEach { chart ->
