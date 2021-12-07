@@ -43,7 +43,7 @@ object Day03 {
       val onesCount = list.count { bits -> bits[index] == '1' }
       val zerosCount = list.size - onesCount
       val value = if (shouldFilterOnes(zerosCount, onesCount)) '1' else '0'
-      val filtered = filterBy(list, index, value)
+      val filtered = list.filterBy(index, value)
       return if (filtered.size == 1) {
         filtered.first().toInt(2)
       } else {
@@ -51,9 +51,8 @@ object Day03 {
       }
     }
 
-    private fun filterBy(list: List<String>, index: Int, value: Bit): List<String> =
-      list.filter { bits -> bits[index] == value }
-
+    private fun List<String>.filterBy(index: Int, value: Bit): List<String> =
+      filter { bits -> bits[index] == value }
   }
 
   fun ratings(list: List<String>): Rating {
