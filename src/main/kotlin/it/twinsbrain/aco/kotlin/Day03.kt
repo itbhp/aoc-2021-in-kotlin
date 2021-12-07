@@ -9,6 +9,7 @@ typealias NumberOfZeros = Int
 typealias NumberOfOnes = Int
 
 typealias Bit = Char
+typealias Bits = String
 
 fun main() {
   val day3Input = readInput("/inputs/day3.txt")
@@ -31,12 +32,12 @@ object Day03 {
 
   private object RatingModule {
 
-    fun co2(list: List<String>): Int = computeRating(list, { zeros, ones -> ones < zeros })
+    fun co2(list: List<Bits>): Int = computeRating(list, { zeros, ones -> ones < zeros })
 
-    fun oxygenRating(list: List<String>): Int = computeRating(list, { zeros, ones -> ones >= zeros })
+    fun oxygenRating(list: List<Bits>): Int = computeRating(list, { zeros, ones -> ones >= zeros })
 
     private tailrec fun computeRating(
-      list: List<String>,
+      list: List<Bits>,
       shouldFilterOnes: (NumberOfZeros, NumberOfOnes) -> Boolean,
       index: Int = 0
     ): Int {
@@ -51,11 +52,11 @@ object Day03 {
       }
     }
 
-    private fun List<String>.filterBy(index: Int, value: Bit): List<String> =
+    private fun List<Bits>.filterBy(index: Int, value: Bit): List<Bits> =
       filter { bits -> bits[index] == value }
   }
 
-  fun ratings(list: List<String>): Rating {
+  fun ratings(list: List<Bits>): Rating {
     if (list.isEmpty()) {
       return Rating.zero
     }
@@ -64,7 +65,7 @@ object Day03 {
     return Rating(oxygen, co2)
   }
 
-  fun rates(list: List<String>): Rates {
+  fun rates(list: List<Bits>): Rates {
     return list.takeIf { list.isNotEmpty() }
       ?.let { bitsList ->
         val numberOfBits = bitsList[0].length
@@ -87,14 +88,14 @@ object Day03 {
 
   private data class BitCounters(val zerosCounters: List<Int>, val onesCounters: List<Int>) {
 
-    fun updateWith(bits: String): BitCounters {
+    fun updateWith(bits: Bits): BitCounters {
       return BitCounters(
         zerosCounters.updateCountersWith(bits) { bit -> bit == '0' },
         onesCounters.updateCountersWith(bits) { bit -> bit == '1' }
       )
     }
 
-    private fun List<Int>.updateCountersWith(bits: String, predicate: (Char) -> Boolean): List<Int> {
+    private fun List<Int>.updateCountersWith(bits: Bits, predicate: (Bit) -> Boolean): List<Int> {
       return bits.toList()
         .zip(this)
         .map { (bit, counter) -> if (predicate(bit)) counter + 1 else counter }
