@@ -15,7 +15,7 @@ fun main() {
 object Day04 {
   fun winner(input: List<String>): Board {
     val lotteryNumbers = lotteryNumbers(input)
-    val board = boardFrom(input)
+    val board = boardFrom(input.drop(1))
     lotteryNumbers.forEach { number ->
       board.draw(number)
     }

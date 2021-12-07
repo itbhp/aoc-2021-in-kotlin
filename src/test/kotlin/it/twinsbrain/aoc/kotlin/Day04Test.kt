@@ -5,6 +5,7 @@ import it.twinsbrain.aoc.kotlin.Day04.Board
 import it.twinsbrain.aoc.kotlin.Day04.Cell
 import it.twinsbrain.aoc.kotlin.Day04.boardFrom
 import it.twinsbrain.aoc.kotlin.Day04.lotteryNumbers
+import it.twinsbrain.aoc.kotlin.Day04.winner
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 
@@ -58,5 +59,37 @@ internal class Day04Test {
         )
       )
     )
+  }
+
+  @Test
+  internal fun `first column`() {
+    val winners = winner(
+      listOf(
+        "2,93,54,82,28",
+        "",
+        "2 1 1 1 1",
+        "93 1 1 1 1",
+        "54 1 1 1 1",
+        "82 1 1 1 1",
+        "28 1 1 1 1",
+      )
+    )
+    assertThat(winners.firstWinner).isEqualTo(20 * 28)
+  }
+
+  @Test
+  internal fun `first row`() {
+    val winners = winner(
+      listOf(
+        "2,93,54,82,28",
+        "",
+        "2 93 54 82 28",
+        "1 1 1 1 1",
+        "1 1 1 1 1",
+        "1 1 1 1 1",
+        "1 1 1 1 1",
+      )
+    )
+    assertThat(winners.firstWinner).isEqualTo(20 * 28)
   }
 }
