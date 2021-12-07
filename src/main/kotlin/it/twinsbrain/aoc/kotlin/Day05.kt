@@ -2,7 +2,7 @@ package it.twinsbrain.aoc.kotlin
 
 import it.twinsbrain.aoc.kotlin.Day05.Segment.Companion.segment
 import it.twinsbrain.aoc.kotlin.common.FileModule
-import it.twinsbrain.aoc.kotlin.common.MathModule
+import it.twinsbrain.aoc.kotlin.common.MathModule.Fraction
 import java.lang.Integer.min
 import kotlin.math.max
 
@@ -15,7 +15,8 @@ fun main() {
 object Day05 {
 
   fun howManyIntersections(input: List<String>): Int {
-    val points: List<Point> = segments(input).flatMap { it.points() }
+    val segments = segments(input).filter { it.isHorizontal() || it.isVertical()}
+    val points: List<Point> = segments.flatMap { it.points() }
     return points
       .groupBy { it }
       .filter { it.value.size > 1 }
@@ -26,7 +27,7 @@ object Day05 {
 
   fun segments(input: List<String>): List<Segment> =
     input.map {
-      val (x1, y1, x2, y2) = regexp.find(it)!!.destructured
+      val (_, x1, y1, x2, y2) = regexp.matchEntire(it)!!.groupValues
       segment(x1.toInt(), y1.toInt(), x2.toInt(), y2.toInt())
     }
 
@@ -42,10 +43,14 @@ object Day05 {
     }
 
     fun points(): List<Point> = when {
-      end.y == start.y -> onHorizontalSegment()
-      end.x == start.x -> onVerticalSegment()
+      isHorizontal() -> onHorizontalSegment()
+      isVertical() -> onVerticalSegment()
       else -> onDiagonalSegment()
     }
+
+    fun isVertical() = end.x == start.x
+
+    fun isHorizontal() = end.y == start.y
 
     private fun onHorizontalSegment() = (start.x..end.x).map { Point(it, start.y) }
 
@@ -56,7 +61,7 @@ object Day05 {
     }
 
     private fun onDiagonalSegment(): List<Point> {
-      val (numerator, denominator) = MathModule.Fraction.from(end.y - start.y, end.x - start.x)
+      val (numerator, denominator) = Fraction.from(end.y - start.y, end.x - start.x)
       val yRange = if (numerator > 0) (start.y..end.y step numerator) else (start.y downTo end.y step (-numerator))
       val xRange = start.x..end.x step denominator
       return xRange.zip(yRange).map { (x, y) -> Point(x, y) }
