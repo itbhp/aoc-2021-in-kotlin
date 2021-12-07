@@ -5,7 +5,7 @@ import it.twinsbrain.aoc.kotlin.Day04.BingoGame
 import it.twinsbrain.aoc.kotlin.Day04.Cell
 import it.twinsbrain.aoc.kotlin.Day04.from
 import it.twinsbrain.aoc.kotlin.Day04.drawnNumbers
-import it.twinsbrain.aoc.kotlin.Day04.winner
+import it.twinsbrain.aoc.kotlin.Day04.winners
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 
@@ -63,7 +63,7 @@ internal class Day04Test {
 
   @Test
   internal fun `first column`() {
-    val winners = winner(
+    val winners = winners(
       listOf(
         "2,93,54,82,28",
         "",
@@ -79,7 +79,7 @@ internal class Day04Test {
 
   @Test
   internal fun `first row`() {
-    val winners = winner(
+    val winners = winners(
       listOf(
         "2,93,54,82,28",
         "",

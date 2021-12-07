@@ -8,7 +8,7 @@ class Day04AcceptanceTest {
   @Test
   internal fun acceptanceTest() {
     val day4Input = FileModule.readInput("/inputs/day04_sample.txt")
-    val board = Day04.winner(day4Input)
+    val board = Day04.winners(day4Input)
     assertThat(board.firstWinner).isEqualTo(4512)
   }
 }
