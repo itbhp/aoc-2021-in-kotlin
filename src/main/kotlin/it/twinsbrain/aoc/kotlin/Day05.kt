@@ -15,5 +15,7 @@ object Day05 {
     }
 
   data class Point(val x: Int, val y: Int)
-  data class Segment(val start: Point, val end: Point)
+  data class Segment(val start: Point, val end: Point) {
+    fun intersect(another: Segment): Point? = TODO()
+  }
 }
