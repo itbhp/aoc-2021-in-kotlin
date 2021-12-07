@@ -1,9 +1,9 @@
-package it.twinsbrain.aco.kotlin
+package it.twinsbrain.aoc.kotlin
 
-import it.twinsbrain.aco.kotlin.Day02.AimedSubmarine
-import it.twinsbrain.aco.kotlin.Day02.Submarine
-import it.twinsbrain.aco.kotlin.Day02.move
-import it.twinsbrain.aco.kotlin.Day02.moveWithAim
+import it.twinsbrain.aoc.kotlin.Day02.AimedSubmarine
+import it.twinsbrain.aoc.kotlin.Day02.Submarine
+import it.twinsbrain.aoc.kotlin.Day02.move
+import it.twinsbrain.aoc.kotlin.Day02.moveWithAim
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Nested
 import org.junit.jupiter.api.Test

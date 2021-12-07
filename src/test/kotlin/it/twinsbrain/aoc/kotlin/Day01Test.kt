@@ -1,7 +1,7 @@
-package it.twinsbrain.aco.kotlin
+package it.twinsbrain.aoc.kotlin
 
-import it.twinsbrain.aco.kotlin.Day01.howManyIncreases
-import it.twinsbrain.aco.kotlin.Day01.howManySubsequentIncreases
+import it.twinsbrain.aoc.kotlin.Day01.howManyIncreases
+import it.twinsbrain.aoc.kotlin.Day01.howManySubsequentIncreases
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Nested
 import org.junit.jupiter.api.Test

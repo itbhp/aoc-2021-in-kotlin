@@ -1,8 +1,8 @@
-package it.twinsbrain.aco.kotlin
+package it.twinsbrain.aoc.kotlin
 
-import it.twinsbrain.aco.kotlin.Day01.howManyIncreases
-import it.twinsbrain.aco.kotlin.Day01.howManySubsequentIncreases
-import it.twinsbrain.aco.kotlin.common.FileModule.readInput
+import it.twinsbrain.aoc.kotlin.Day01.howManyIncreases
+import it.twinsbrain.aoc.kotlin.Day01.howManySubsequentIncreases
+import it.twinsbrain.aoc.kotlin.common.FileModule.readInput
 
 object Day01 {
   // part1

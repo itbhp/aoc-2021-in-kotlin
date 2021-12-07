@@ -1,4 +1,4 @@
-package it.twinsbrain.aco.kotlin.common
+package it.twinsbrain.aoc.kotlin.common
 
 import arrow.core.andThen
 import java.io.File

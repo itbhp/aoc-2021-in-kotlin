@@ -1,10 +1,10 @@
-package it.twinsbrain.aco.kotlin
+package it.twinsbrain.aoc.kotlin
 
-import it.twinsbrain.aco.kotlin.Day02.Command.Companion.moveWithAim
-import it.twinsbrain.aco.kotlin.Day02.Command.Companion.moveWithoutAim
-import it.twinsbrain.aco.kotlin.Day02.move
-import it.twinsbrain.aco.kotlin.Day02.moveWithAim
-import it.twinsbrain.aco.kotlin.common.FileModule.readInput
+import it.twinsbrain.aoc.kotlin.Day02.Command.Companion.moveWithAim
+import it.twinsbrain.aoc.kotlin.Day02.Command.Companion.moveWithoutAim
+import it.twinsbrain.aoc.kotlin.Day02.move
+import it.twinsbrain.aoc.kotlin.Day02.moveWithAim
+import it.twinsbrain.aoc.kotlin.common.FileModule.readInput
 
 fun main() {
   val day2Input = readInput("/inputs/day2.txt")

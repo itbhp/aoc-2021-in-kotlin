@@ -1,9 +1,9 @@
-package it.twinsbrain.aco.kotlin
+package it.twinsbrain.aoc.kotlin
 
-import it.twinsbrain.aco.kotlin.Day03.Rates.Companion.zero
-import it.twinsbrain.aco.kotlin.Day03.rates
-import it.twinsbrain.aco.kotlin.Day03.ratings
-import it.twinsbrain.aco.kotlin.common.FileModule.readInput
+import it.twinsbrain.aoc.kotlin.Day03.Rates.Companion.zero
+import it.twinsbrain.aoc.kotlin.Day03.rates
+import it.twinsbrain.aoc.kotlin.Day03.ratings
+import it.twinsbrain.aoc.kotlin.common.FileModule.readInput
 
 typealias NumberOfZeros = Int
 typealias NumberOfOnes = Int

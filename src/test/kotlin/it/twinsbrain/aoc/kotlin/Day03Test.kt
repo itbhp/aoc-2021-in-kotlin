@@ -1,7 +1,7 @@
-package it.twinsbrain.aco.kotlin
+package it.twinsbrain.aoc.kotlin
 
-import it.twinsbrain.aco.kotlin.Day03.rates
-import it.twinsbrain.aco.kotlin.Day03.ratings
+import it.twinsbrain.aoc.kotlin.Day03.rates
+import it.twinsbrain.aoc.kotlin.Day03.ratings
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Nested
 import org.junit.jupiter.api.Test
@@ -106,10 +106,10 @@ internal class Day03Test {
             "000",
             "011",
             "101",
-            //011
+            //101
           )
         ).co2.value
-      ).isEqualTo(3)
+      ).isEqualTo(5)
     }
   }
 }

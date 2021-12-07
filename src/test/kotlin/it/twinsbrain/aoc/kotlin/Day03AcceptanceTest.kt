@@ -1,6 +1,6 @@
-package it.twinsbrain.aco.kotlin
+package it.twinsbrain.aoc.kotlin
 
-import it.twinsbrain.aco.kotlin.common.FileModule.readInput
+import it.twinsbrain.aoc.kotlin.common.FileModule.readInput
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 
