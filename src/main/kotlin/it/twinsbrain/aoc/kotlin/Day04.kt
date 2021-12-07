@@ -1,13 +1,14 @@
 package it.twinsbrain.aoc.kotlin
 
 import it.twinsbrain.aoc.kotlin.Day04.Cell
+import it.twinsbrain.aoc.kotlin.Day04.winners
 import it.twinsbrain.aoc.kotlin.common.FileModule
 
 typealias Row = List<Cell>
 
 fun main() {
   val day4Input = FileModule.readInput("/inputs/day04.txt")
-  val checkedBoard = Day04.winners(day4Input)
+  val checkedBoard = winners(day4Input)
   println("First: ${checkedBoard.firstWinner}")
   println("Last: ${checkedBoard.lastWinner}")
 }
