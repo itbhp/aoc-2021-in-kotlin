@@ -95,25 +95,28 @@ object Day03 {
       )
     }
 
-    private fun List<Int>.updateCountersWith(bits: Bits, predicate: (Bit) -> Boolean): List<Int> {
+    private fun List<Int>.updateCountersWith(
+      bits: Bits,
+      isMatching: (Bit) -> Boolean
+    ): List<Int> {
       return bits.toList()
         .zip(this)
-        .map { (bit, counter) -> if (predicate(bit)) counter + 1 else counter }
+        .map { (bit, counter) -> if (isMatching(bit)) counter + 1 else counter }
     }
 
     fun gammaRate(): Int =
-      rate { numberOfZeros, numberOfOnes -> numberOfZeros > numberOfOnes }
+      rate { zeros, ones -> zeros > ones }
 
     fun epsilonRate(): Int =
-      rate { numberOfZeros, numberOfOnes -> numberOfZeros < numberOfOnes }
+      rate { zeros, ones -> zeros < ones }
 
     private fun rate(
-      predicate: (NumberOfZeros, NumberOfOnes) -> Boolean
+      shouldUseZero: (NumberOfZeros, NumberOfOnes) -> Boolean
     ) = onesCounters.takeIf { it.isNotEmpty() }
       ?.let { ones ->
         zerosCounters.zip(ones)
           .map { (numberOfZeros, numberOfOnes) ->
-            if (predicate(numberOfZeros, numberOfOnes)) '0' else '1'
+            if (shouldUseZero(numberOfZeros, numberOfOnes)) '0' else '1'
           }.joinToString("").toInt(2)
       } ?: 0
 
