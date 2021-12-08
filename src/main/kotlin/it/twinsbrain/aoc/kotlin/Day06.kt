@@ -7,20 +7,16 @@ import it.twinsbrain.aoc.kotlin.common.FileModule.readInput
 fun main() {
   val day6Input = readInput("/inputs/day06.txt")
   println("Part1: ${countFish(day6Input, 80)}")
-  println("Part2: ${nextGenerationAfter(day6Input, 3).count}")
+  println("Part2: ${nextGenerationAfter(day6Input, 3).count()}")
 }
 
 object Day06Part2 {
 
   fun nextGenerationAfter(input: List<String>, days: Int): Generation {
     val initial: Generation = parse(input)
-//    println("Initial $initial")
     return (1..days).fold(initial) { previous, _ ->
-      val moveForward = previous.next()
+      val moveForward = previous.moveForward()
       val reset = previous.reset()
-//      println("reset: $reset")
-//      println("moveForward: $moveForward")
-//      println("moveForward + reset : ${reset + moveForward}")
       reset + moveForward
     }
   }
@@ -28,79 +24,58 @@ object Day06Part2 {
   fun parse(input: List<String>): Generation {
     val numbers = input[0].split(",").map { it.toInt() }
     val numbersCounts = numbers.groupBy { it }.mapValues { it.value.size }
-    return Generation(
-      zeroDaysUntilReset = numbersCounts[0] ?: 0,
-      oneDayUntilReset = numbersCounts[1] ?: 0,
-      twoDaysUntilReset = numbersCounts[2] ?: 0,
-      threeDaysUntilReset = numbersCounts[3] ?: 0,
-      fourDaysUntilReset = numbersCounts[4] ?: 0,
-      fiveDaysUntilReset = numbersCounts[5] ?: 0,
-      sixDaysUntilReset = numbersCounts[6] ?: 0,
-      sevenDaysUntilReset = numbersCounts[7] ?: 0,
-      eightDaysUntilReset = numbersCounts[8] ?: 0
-    )
+    val resetDays = Array(9) { 0 }
+    numbersCounts.forEach { (k, v) ->
+      resetDays[k] = v
+    }
+    return Generation(resetDays)
   }
 
   data class Generation(
-    val zeroDaysUntilReset: Int = 0,
-    val oneDayUntilReset: Int = 0,
-    val twoDaysUntilReset: Int = 0,
-    val threeDaysUntilReset: Int = 0,
-    val fourDaysUntilReset: Int = 0,
-    val fiveDaysUntilReset: Int = 0,
-    val sixDaysUntilReset: Int = 0,
-    val sevenDaysUntilReset: Int = 0,
-    val eightDaysUntilReset: Int = 0
+    val resetDays: Array<Int>,
   ) {
-    override fun toString(): String {
-      return "[$zeroDaysUntilReset, $oneDayUntilReset, $twoDaysUntilReset, " +
-        "$threeDaysUntilReset, $fourDaysUntilReset, $fiveDaysUntilReset," +
-        " $sixDaysUntilReset, $sevenDaysUntilReset, $eightDaysUntilReset]"
+
+    fun count(): Int = resetDays.sum()
+
+    fun reset(): Generation {
+      val numberOfFishToReset = resetDays[0]
+      return Generation(
+        Array(9) { 0 }.apply {
+          this[6] = numberOfFishToReset
+          this[8] = numberOfFishToReset
+        }
+      )
     }
-    val count: Int
-      get() {
-        return zeroDaysUntilReset +
-          oneDayUntilReset +
-          twoDaysUntilReset +
-          threeDaysUntilReset +
-          fourDaysUntilReset +
-          fiveDaysUntilReset +
-          sixDaysUntilReset +
-          sevenDaysUntilReset +
-          eightDaysUntilReset
+
+    fun moveForward(): Generation {
+      val newResetDays = Array(9) { 0 }
+      (1 until this.resetDays.size).map { index ->
+        newResetDays[index - 1] = this.resetDays[index]
       }
+      return Generation(newResetDays)
+    }
 
-    fun reset(): Generation =
-      if (zeroDaysUntilReset > 0) {
-        Generation(
-          sixDaysUntilReset = this.zeroDaysUntilReset,
-          eightDaysUntilReset = this.zeroDaysUntilReset,
-        )
-      } else Generation()
+    operator fun plus(other: Generation): Generation {
+      this.resetDays.mapIndexed { index, i ->
+        this.resetDays[index] = i + other.resetDays[index]
+      }
+      return this
+    }
 
-    fun next(): Generation = this.copy(
-      zeroDaysUntilReset = oneDayUntilReset,
-      oneDayUntilReset = twoDaysUntilReset,
-      twoDaysUntilReset = threeDaysUntilReset,
-      threeDaysUntilReset = fourDaysUntilReset,
-      fourDaysUntilReset = fiveDaysUntilReset,
-      fiveDaysUntilReset = sixDaysUntilReset,
-      sixDaysUntilReset = sevenDaysUntilReset,
-      sevenDaysUntilReset = eightDaysUntilReset,
-      eightDaysUntilReset = 0
-    )
+    override fun equals(other: Any?): Boolean {
+      if (this === other) return true
+      if (javaClass != other?.javaClass) return false
 
-    operator fun plus(other: Generation): Generation = this.copy(
-      zeroDaysUntilReset = this.zeroDaysUntilReset + other.zeroDaysUntilReset,
-      oneDayUntilReset = this.oneDayUntilReset + other.oneDayUntilReset,
-      twoDaysUntilReset = this.twoDaysUntilReset + other.twoDaysUntilReset,
-      threeDaysUntilReset = this.threeDaysUntilReset + other.threeDaysUntilReset,
-      fourDaysUntilReset = this.fourDaysUntilReset + other.fourDaysUntilReset,
-      fiveDaysUntilReset = this.fiveDaysUntilReset + other.fiveDaysUntilReset,
-      sixDaysUntilReset = this.sixDaysUntilReset + other.sixDaysUntilReset,
-      sevenDaysUntilReset = this.sevenDaysUntilReset + other.sevenDaysUntilReset,
-      eightDaysUntilReset = this.eightDaysUntilReset + other.eightDaysUntilReset
-    )
+      other as Generation
+
+      if (!resetDays.contentEquals(other.resetDays)) return false
+
+      return true
+    }
+
+    override fun hashCode(): Int {
+      return resetDays.contentHashCode()
+    }
   }
 }
 

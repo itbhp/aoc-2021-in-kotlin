@@ -21,10 +21,7 @@ class Day06Test {
         )
       ).isEqualTo(
         Generation(
-          oneDayUntilReset = 1,
-          twoDaysUntilReset = 1,
-          threeDaysUntilReset = 1,
-          fourDaysUntilReset = 1
+          arrayOf(0, 1, 1, 1, 1, 0, 0, 0, 0)
         )
       )
     }
@@ -37,12 +34,7 @@ class Day06Test {
         )
       ).isEqualTo(
         Generation(
-          oneDayUntilReset = 1,
-          twoDaysUntilReset = 1,
-          threeDaysUntilReset = 2,
-          fourDaysUntilReset = 1,
-          fiveDaysUntilReset = 1,
-          sixDaysUntilReset = 2
+          arrayOf(0, 1, 1, 2, 1, 1, 2, 0, 0)
         )
       )
     }
@@ -56,10 +48,7 @@ class Day06Test {
         )
       ).isEqualTo(
         Generation(
-          zeroDaysUntilReset = 1,
-          oneDayUntilReset = 1,
-          twoDaysUntilReset = 2,
-          threeDaysUntilReset = 1
+          arrayOf(1, 1, 2, 1, 0, 0, 0, 0, 0)
         )
       )
     }
@@ -75,11 +64,7 @@ class Day06Test {
         )
       ).isEqualTo(
         Generation(
-          zeroDaysUntilReset = 1,
-          oneDayUntilReset = 2,
-          twoDaysUntilReset = 1,
-          sixDaysUntilReset = 1,
-          eightDaysUntilReset = 1
+          arrayOf(1, 2, 1, 0, 0, 0, 1, 0, 1)
         )
       )
     }
