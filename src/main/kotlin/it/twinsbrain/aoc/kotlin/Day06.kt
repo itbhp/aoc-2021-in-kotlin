@@ -7,7 +7,7 @@ import it.twinsbrain.aoc.kotlin.common.FileModule.readInput
 fun main() {
   val day6Input = readInput("/inputs/day06.txt")
   println("Part1: ${countFish(day6Input, 80)}")
-  println("Part2: ${nextGenerationAfter(day6Input, 256).count()}")
+  println("Part2: ${nextGenerationAfter(day6Input, 256).count()}") // 1732821262171
 }
 
 object Day06Part2 {
@@ -24,23 +24,23 @@ object Day06Part2 {
   fun parse(input: List<String>): Generation {
     val numbers = input[0].split(",").map { it.toInt() }
     val numbersCounts = numbers.groupingBy { it }.eachCount()
-    val resetDays = Array(9) { 0 }
+    val resetDays = Array(9) { 0L }
     numbersCounts.forEach { (k, v) ->
-      resetDays[k] = v
+      resetDays[k] = v.toLong()
     }
     return Generation(resetDays)
   }
 
   data class Generation(
-    val resetDays: Array<Int>,
+    val resetDays: Array<Long>,
   ) {
 
-    fun count(): Int = resetDays.sum()
+    fun count(): Long = resetDays.sum()
 
     fun reset(): Generation {
       val numberOfFishToReset = resetDays[0]
       return Generation(
-        Array(9) { 0 }.apply {
+        Array(9) { 0L }.apply {
           this[6] = numberOfFishToReset
           this[8] = numberOfFishToReset
         }
@@ -48,7 +48,7 @@ object Day06Part2 {
     }
 
     fun moveForward(): Generation {
-      val newResetDays = Array(9) { 0 }
+      val newResetDays = Array(9) { 0L }
       (0..7).map { index ->
         newResetDays[index] = this.resetDays[index + 1]
       }
