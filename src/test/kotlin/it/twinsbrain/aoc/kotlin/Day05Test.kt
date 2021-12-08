@@ -72,7 +72,7 @@ internal class Day05Test {
   }
 
   @Nested
-  inner class ContainsTest {
+  inner class SegmentsPointsTest {
 
     @ParameterizedTest
     @ArgumentsSource(ContainsFixtures::class)
