@@ -7,16 +7,20 @@ import it.twinsbrain.aoc.kotlin.common.FileModule.readInput
 fun main() {
   val day6Input = readInput("/inputs/day06.txt")
   println("Part1: ${countFish(day6Input, 80)}")
-  println("Part2: ${nextGenerationAfter(day6Input, 256).count}")
+  println("Part2: ${nextGenerationAfter(day6Input, 3).count}")
 }
 
 object Day06Part2 {
 
   fun nextGenerationAfter(input: List<String>, days: Int): Generation {
     val initial: Generation = parse(input)
+//    println("Initial $initial")
     return (1..days).fold(initial) { previous, _ ->
       val moveForward = previous.next()
       val reset = previous.reset()
+//      println("reset: $reset")
+//      println("moveForward: $moveForward")
+//      println("moveForward + reset : ${reset + moveForward}")
       reset + moveForward
     }
   }
@@ -48,6 +52,11 @@ object Day06Part2 {
     val sevenDaysUntilReset: Int = 0,
     val eightDaysUntilReset: Int = 0
   ) {
+    override fun toString(): String {
+      return "[$zeroDaysUntilReset, $oneDayUntilReset, $twoDaysUntilReset, " +
+        "$threeDaysUntilReset, $fourDaysUntilReset, $fiveDaysUntilReset," +
+        " $sixDaysUntilReset, $sevenDaysUntilReset, $eightDaysUntilReset]"
+    }
     val count: Int
       get() {
         return zeroDaysUntilReset +
@@ -77,7 +86,7 @@ object Day06Part2 {
       fourDaysUntilReset = fiveDaysUntilReset,
       fiveDaysUntilReset = sixDaysUntilReset,
       sixDaysUntilReset = sevenDaysUntilReset,
-      sevenDaysUntilReset = sevenDaysUntilReset,
+      sevenDaysUntilReset = eightDaysUntilReset,
       eightDaysUntilReset = 0
     )
 
