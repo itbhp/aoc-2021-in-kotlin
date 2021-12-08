@@ -1,6 +1,6 @@
 package it.twinsbrain.aoc.kotlin
 
-import it.twinsbrain.aoc.kotlin.Day06.countFish
+import it.twinsbrain.aoc.kotlin.Day06Part1.countFish
 import it.twinsbrain.aoc.kotlin.common.FileModule.readInput
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test

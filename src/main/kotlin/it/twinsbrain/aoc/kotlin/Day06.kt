@@ -1,15 +1,101 @@
 package it.twinsbrain.aoc.kotlin
 
-import it.twinsbrain.aoc.kotlin.Day06.countFish
-import it.twinsbrain.aoc.kotlin.common.FileModule
+import it.twinsbrain.aoc.kotlin.Day06Part1.countFish
+import it.twinsbrain.aoc.kotlin.Day06Part2.nextGenerationAfter
+import it.twinsbrain.aoc.kotlin.common.FileModule.readInput
 
 fun main() {
-  val day6Input = FileModule.readInput("/inputs/day06.txt")
+  val day6Input = readInput("/inputs/day06.txt")
   println("Part1: ${countFish(day6Input, 80)}")
-//  println("Part2: ${countFish(day6Input, 256)}")
+  println("Part2: ${nextGenerationAfter(day6Input, 256).count}")
 }
 
-object Day06 {
+object Day06Part2 {
+
+  fun nextGenerationAfter(input: List<String>, days: Int): Generation {
+    val initial: Generation = parse(input)
+    return (1..days).fold(initial) { previous, _ ->
+      val moveForward = previous.next()
+      val reset = previous.reset()
+      reset + moveForward
+    }
+  }
+
+  fun parse(input: List<String>): Generation {
+    val numbers = input[0].split(",").map { it.toInt() }
+    val numbersCounts = numbers.groupBy { it }.mapValues { it.value.size }
+    return Generation(
+      zeroDaysUntilReset = numbersCounts[0] ?: 0,
+      oneDayUntilReset = numbersCounts[1] ?: 0,
+      twoDaysUntilReset = numbersCounts[2] ?: 0,
+      threeDaysUntilReset = numbersCounts[3] ?: 0,
+      fourDaysUntilReset = numbersCounts[4] ?: 0,
+      fiveDaysUntilReset = numbersCounts[5] ?: 0,
+      sixDaysUntilReset = numbersCounts[6] ?: 0,
+      sevenDaysUntilReset = numbersCounts[7] ?: 0,
+      eightDaysUntilReset = numbersCounts[8] ?: 0
+    )
+  }
+
+  data class Generation(
+    val zeroDaysUntilReset: Int = 0,
+    val oneDayUntilReset: Int = 0,
+    val twoDaysUntilReset: Int = 0,
+    val threeDaysUntilReset: Int = 0,
+    val fourDaysUntilReset: Int = 0,
+    val fiveDaysUntilReset: Int = 0,
+    val sixDaysUntilReset: Int = 0,
+    val sevenDaysUntilReset: Int = 0,
+    val eightDaysUntilReset: Int = 0
+  ) {
+    val count: Int
+      get() {
+        return zeroDaysUntilReset +
+          oneDayUntilReset +
+          twoDaysUntilReset +
+          threeDaysUntilReset +
+          fourDaysUntilReset +
+          fiveDaysUntilReset +
+          sixDaysUntilReset +
+          sevenDaysUntilReset +
+          eightDaysUntilReset
+      }
+
+    fun reset(): Generation =
+      if (zeroDaysUntilReset > 0) {
+        Generation(
+          sixDaysUntilReset = this.zeroDaysUntilReset,
+          eightDaysUntilReset = this.zeroDaysUntilReset,
+        )
+      } else Generation()
+
+    fun next(): Generation = this.copy(
+      zeroDaysUntilReset = oneDayUntilReset,
+      oneDayUntilReset = twoDaysUntilReset,
+      twoDaysUntilReset = threeDaysUntilReset,
+      threeDaysUntilReset = fourDaysUntilReset,
+      fourDaysUntilReset = fiveDaysUntilReset,
+      fiveDaysUntilReset = sixDaysUntilReset,
+      sixDaysUntilReset = sevenDaysUntilReset,
+      sevenDaysUntilReset = sevenDaysUntilReset,
+      eightDaysUntilReset = 0
+    )
+
+    operator fun plus(other: Generation): Generation = this.copy(
+      zeroDaysUntilReset = this.zeroDaysUntilReset + other.zeroDaysUntilReset,
+      oneDayUntilReset = this.oneDayUntilReset + other.oneDayUntilReset,
+      twoDaysUntilReset = this.twoDaysUntilReset + other.twoDaysUntilReset,
+      threeDaysUntilReset = this.threeDaysUntilReset + other.threeDaysUntilReset,
+      fourDaysUntilReset = this.fourDaysUntilReset + other.fourDaysUntilReset,
+      fiveDaysUntilReset = this.fiveDaysUntilReset + other.fiveDaysUntilReset,
+      sixDaysUntilReset = this.sixDaysUntilReset + other.sixDaysUntilReset,
+      sevenDaysUntilReset = this.sevenDaysUntilReset + other.sevenDaysUntilReset,
+      eightDaysUntilReset = this.eightDaysUntilReset + other.eightDaysUntilReset
+    )
+  }
+}
+
+object Day06Part1 {
 
   fun countFish(input: List<String>, simulationDays: Int): Int {
     val worldAfter = worldAfter(input, simulationDays)
