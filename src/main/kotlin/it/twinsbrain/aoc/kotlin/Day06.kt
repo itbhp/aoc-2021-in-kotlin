@@ -31,9 +31,7 @@ object Day06Part2 {
     return Generation(daysUntilReset)
   }
 
-  data class Generation(
-    val daysUntilReset: Array<Long>,
-  ) {
+  data class Generation(val daysUntilReset: Array<Long>) {
 
     fun count(): Long = daysUntilReset.sum()
 
