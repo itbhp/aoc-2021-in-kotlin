@@ -48,18 +48,19 @@ object Day06Part2 {
     }
 
     fun moveForward(): Generation {
-      val newResetDays = Array(9) { 0L }
+      val newDaysUntilReset = Array(9) { 0L }
       (0..7).map { index ->
-        newResetDays[index] = this.daysUntilReset[index + 1]
+        newDaysUntilReset[index] = this.daysUntilReset[index + 1]
       }
-      return Generation(newResetDays)
+      return Generation(newDaysUntilReset)
     }
 
     operator fun plus(other: Generation): Generation {
+      val newDaysUntilReset = Array(9) { 0L }
       this.daysUntilReset.mapIndexed { index, value ->
-        this.daysUntilReset[index] = value + other.daysUntilReset[index]
+        newDaysUntilReset[index] = value + other.daysUntilReset[index]
       }
-      return this
+      return Generation(newDaysUntilReset)
     }
 
     override fun equals(other: Any?): Boolean {
