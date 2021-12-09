@@ -36,7 +36,8 @@ internal class Day05Test {
         listOf(
           "0,1 -> 0,10",
           "0,1 -> 2,3"
-        )
+        ),
+        true
       )
     ).isEqualTo(1)
   }

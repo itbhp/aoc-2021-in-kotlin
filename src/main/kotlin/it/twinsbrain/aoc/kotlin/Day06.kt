@@ -24,21 +24,21 @@ object Day06Part2 {
   fun parse(input: List<String>): Generation {
     val numbers = input[0].split(",").map { it.toInt() }
     val numbersCounts = numbers.groupingBy { it }.eachCount()
-    val resetDays = Array(9) { 0L }
+    val daysUntilReset = Array(9) { 0L }
     numbersCounts.forEach { (k, v) ->
-      resetDays[k] = v.toLong()
+      daysUntilReset[k] = v.toLong()
     }
-    return Generation(resetDays)
+    return Generation(daysUntilReset)
   }
 
   data class Generation(
-    val resetDays: Array<Long>,
+    val daysUntilReset: Array<Long>,
   ) {
 
-    fun count(): Long = resetDays.sum()
+    fun count(): Long = daysUntilReset.sum()
 
     fun reset(): Generation {
-      val numberOfFishToReset = resetDays[0]
+      val numberOfFishToReset = daysUntilReset[0]
       return Generation(
         Array(9) { 0L }.apply {
           this[6] = numberOfFishToReset
@@ -50,14 +50,14 @@ object Day06Part2 {
     fun moveForward(): Generation {
       val newResetDays = Array(9) { 0L }
       (0..7).map { index ->
-        newResetDays[index] = this.resetDays[index + 1]
+        newResetDays[index] = this.daysUntilReset[index + 1]
       }
       return Generation(newResetDays)
     }
 
     operator fun plus(other: Generation): Generation {
-      this.resetDays.mapIndexed { index, value ->
-        this.resetDays[index] = value + other.resetDays[index]
+      this.daysUntilReset.mapIndexed { index, value ->
+        this.daysUntilReset[index] = value + other.daysUntilReset[index]
       }
       return this
     }
@@ -68,13 +68,13 @@ object Day06Part2 {
 
       other as Generation
 
-      if (!resetDays.contentEquals(other.resetDays)) return false
+      if (!daysUntilReset.contentEquals(other.daysUntilReset)) return false
 
       return true
     }
 
     override fun hashCode(): Int {
-      return resetDays.contentHashCode()
+      return daysUntilReset.contentHashCode()
     }
   }
 }
