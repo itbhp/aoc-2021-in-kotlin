@@ -1,6 +1,15 @@
 package it.twinsbrain.aoc.kotlin
 
+import it.twinsbrain.aoc.kotlin.Day07.part1
+import it.twinsbrain.aoc.kotlin.Day07.part2
+import it.twinsbrain.aoc.kotlin.common.FileModule.readInput
 import kotlin.math.abs
+
+fun main() {
+  val input = readInput("/inputs/day07.txt")
+  println("Part1: ${part1(input[0])}")
+  println("Part2: ${part2(input[0])}")
+}
 
 object Day07 {
   fun part1(input: String): Int {
@@ -9,13 +18,13 @@ object Day07 {
     return costToMoveToMedian(numberOfCrabs, crabsPos)
   }
 
-  fun part2(input: String): Int {
+  fun part2(input: String): Long {
     val crabsPos = parseCrabsPositions(input)
-    val average: Double = crabsPos.average()
-    return crabsPos.sumOf { position -> cost(abs(position - average)) }.toInt()
+    val average: Int = crabsPos.average().toInt()
+    return crabsPos.sumOf { position -> cost(abs(position - average)) }.toLong()
   }
 
-  private fun cost(n: Double): Double {
+  private fun cost(n: Int): Int {
     return n * (n + 1) / 2
   }
 
